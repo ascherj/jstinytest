@@ -1,7 +1,11 @@
 <script src="../tinytest.js"></script>
 <script>
 
-function forEach(array, callback) {
+function forEach(array, callback, optionalThisObject) {
+  if (optionalThisObject) {
+    callback = callback.bind(optionalThisObject);
+  }
+
   for (var i = 0; i < array.length; i++) {
     callback(array[i], i, array);
   }
@@ -30,6 +34,11 @@ tests({
     forEach(testArray, function(number, index, originalArray) {
       eq(testArray, originalArray);
     });
+  },
+  'It should accept an optional this object.': function() {
+    forEach([1, 2, 3], function(number, index, originalArray) {
+      eq(this.description, 'I should be accessible inside the callback');
+    }, {description: 'I should be accessible inside the callback'})
   }
 });
 </script>
