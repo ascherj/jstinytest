@@ -3,7 +3,7 @@
 
 function forEach(array, callback) {
   for (var i = 0; i < array.length; i++) {
-    callback(array[i]);
+    callback(array[i], i, array);
   }
 }
 
@@ -18,6 +18,17 @@ tests({
   'It should pass in the ith element as the first argument to the callback.': function() {
     forEach([1], function(number) {
       eq(number, 1);
+    });
+  },
+  'It should pass in the ith position as the second argument to the callback.': function() {
+    forEach([1], function(number, index) {
+      eq(index, 0);
+    });
+  },
+  'It should pass in the original array as the third argument to the callback.': function() {
+    var testArray = [1, 2, 3];
+    forEach(testArray, function(number, index, originalArray) {
+      eq(testArray, originalArray);
     });
   }
 });
