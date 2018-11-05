@@ -47,32 +47,21 @@ tests({
       eq(this.description, 'I should be accessible inside the callback');
     }, {description: 'I should be accessible inside the callback'});
   },
-  'It should return an empty array given a callback that always returns false.': function() {
-    var filteredArray = filter([1, 2, 3], function() {
-      return false;
-    });
-    eq(JSON.stringify(filteredArray), JSON.stringify([]));
+  'It should return an array.': function() {
+    var filteredArray = filter([], function() {});
+    eq(Array.isArray(filteredArray), true);
   },
-  'It should return the original array given a callback that always return true.': function() {
-    var originalArray = [1, 2, 3];
-    var filteredArray = filter(originalArray, function() {
-      return true;
-    });
-    eq(JSON.stringify(filteredArray), JSON.stringify(originalArray));
+  'It should return a new array, not the array being filtered.': function() {
+    var arrayBeingFiltered = [];
+    var filteredArray = filter(arrayBeingFiltered, function() {});
+    eq(filteredArray !== arrayBeingFiltered, true);
   },
-  'It should return only the even numbers in an array.': function() {
-    var numbers = [1, 2, 3, 4, 5];
-    var filteredArray = filter(numbers, function(number, index) {
-      return number % 2 === 0;
+  'It should return a new array whose elements, when passed to the callback, return true.': function() {
+    var filteredArray = filter([1, 2, 3], function(number) {
+      return number === 2;
     });
-    eq(JSON.stringify(filteredArray), JSON.stringify([2, 4]));
-  },
-  'It should return only the odd numbers in an array.': function() {
-    var numbers = [1, 2, 3, 4, 5];
-    var filteredArray = filter(numbers, function(number, index) {
-      return number % 2 !== 0;
-    });
-    eq(JSON.stringify(filteredArray), JSON.stringify([1, 3, 5]));
+    eq(filteredArray.length, 1);
+    eq(filteredArray[0], 2);
   }
 });
 </script>
