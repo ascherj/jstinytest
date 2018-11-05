@@ -47,13 +47,13 @@ tests({
       eq(this.description, 'I should be accessible inside the callback');
     }, {description: 'I should be accessible inside the callback'});
   },
-  'It should return an empty array given a callback that always returns false': function() {
+  'It should return an empty array given a callback that always returns false.': function() {
     var filteredArray = filter([1, 2, 3], function() {
       return false;
     });
     eq(JSON.stringify(filteredArray), JSON.stringify([]));
   },
-  'It should return the original array given a callback that always return true': function() {
+  'It should return the original array given a callback that always return true.': function() {
     var originalArray = [1, 2, 3];
     var filteredArray = filter(originalArray, function() {
       return true;
