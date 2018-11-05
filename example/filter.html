@@ -1,0 +1,51 @@
+<script src="../tinytest.js"></script>
+<script>
+
+function filter(array, callback, optionalThisObject) {
+  var filteredArray = [];
+
+  if (optionalThisObject) {
+    callback = callback.bind(optionalThisObject);
+  }
+
+  for (var i = 0; i < array.length; i++) {
+    var element = array[i];
+    if (callback(element, i, array)) {
+      filteredArray.push(element);
+    }
+  }
+
+  return filteredArray;
+}
+
+tests({
+  'It should run the callback function array.length times.': function() {
+    var numberOfTimesCallbackHasRun = 0;
+    filter([1, 2, 3], function() {
+      numberOfTimesCallbackHasRun++;
+    });
+    eq(numberOfTimesCallbackHasRun, 3);
+  },
+  'It should pass in the ith element as the first argument to the callback.': function() {
+    filter([1], function(number) {
+      eq(number, 1);
+    });
+  },
+  'It should pass in the ith position as the second argument to the callback.': function() {
+    filter([1], function(number, index) {
+      eq(index, 0);
+    });
+  },
+  'It should pass in the original array as the third argument to the callback.': function() {
+    var testArray = [1, 2, 3];
+    filter(testArray, function(number, index, originalArray) {
+      eq(testArray, originalArray);
+    });
+  },
+  'It should accept an optional this object.': function() {
+    filter([1, 2, 3], function(number, index, originalArray) {
+      eq(this.description, 'I should be accessible inside the callback');
+    }, {description: 'I should be accessible inside the callback'});
+  }
+});
+</script>
