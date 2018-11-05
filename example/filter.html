@@ -59,6 +59,20 @@ tests({
       return true;
     });
     eq(JSON.stringify(filteredArray), JSON.stringify(originalArray));
+  },
+  'It should return only the even numbers in an array': function() {
+    var numbers = [1, 2, 3, 4, 5];
+    var filteredArray = filter(numbers, function(number, index) {
+      return number % 2 === 0;
+    });
+    eq(JSON.stringify(filteredArray), JSON.stringify([2, 4]));
+  },
+  'It should return only the odd numbers in an array': function() {
+    var numbers = [1, 2, 3, 4, 5];
+    var filteredArray = filter(numbers, function(number, index) {
+      return number % 2 !== 0;
+    });
+    eq(JSON.stringify(filteredArray), JSON.stringify([1, 3, 5]));
   }
 });
 </script>
