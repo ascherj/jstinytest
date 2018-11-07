@@ -1,0 +1,53 @@
+<script src="../tinytest.js"></script>
+<script>
+
+// function reduce(array, callback, initialValue) {
+//   var accumulator = initialValue;
+//   for (var i = 0; i < array.length; i++) {
+//     accumulator = callback(accumulator, array[i], i, array);
+//   }
+//   return accumulator;
+// }
+
+// reduce(array, callback, [, initialValue]);
+
+// Returns a single value
+
+// Description
+
+  // Executes the callback once for each element present in the array, excluding holes.
+
+// Parameters
+
+  // 1. accumulator
+  // 2. currentValue
+  // 3. curerntIndex
+  // 4. array
+
+// Cases
+
+  // Case A: initialValue is provided
+    // accumulator = initialValue
+    // currentValue = first value in array
+    // Callback execution starts at index 0
+
+  // Case B: initialValue not provided
+    // accumulator = first value in array
+    // currentValue = second value in array
+    // Callback execution starts at index 1
+
+// Edge cases
+
+  // If array is empty and no initialValue is provided, then TypeError will be thrown.
+    // reduce([], function() {}) ==> TypeError
+
+  // If array has only one element (regardless of position) and no initialValue is provided, or if initialValue is provided but the array is empty, the solo value will be returned without calling callback.
+    // reduce([/* hole */, 1], function() {})             ==> return 1 without calling callback
+    // reduce([1], function() {})                         ==> return 1 without calling callback
+    // reduce([], function() {}, 0)                       ==> return 0 without calling callback
+    // reduce([/* hole */, /* hole */], function() {}, 0) ==> return 0 without calling callback
+
+tests({
+  '': function() {}
+});
+</script>
