@@ -9,7 +9,9 @@ function map(array, callback, optionalThisObject) {
   }
 
   for (var i = 0; i < array.length; i++) {
-    mappedArray.push(callback(array[i], i, array));
+    if (i in array) {
+      mappedArray[i] = callback(array[i], i, array);
+    }
   }
 
   return mappedArray;
@@ -59,6 +61,13 @@ tests({
     });
     eq(mappedArray.length, 1);
     eq(mappedArray[0], 9);
+  },
+  'It should skip empty indices in the original array.': function() {
+    var mappedArray = map([, 1], function(number) {
+      return number * 2;
+    });
+    eq(0 in mappedArray, false);
+    eq(mappedArray[1], 2);
   }
 });
 </script>
